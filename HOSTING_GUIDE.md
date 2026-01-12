@@ -40,14 +40,21 @@ This guide covers free hosting options for your Discord bot to run 24/7.
    - Click "Variables" tab
    - Add: `DISCORD_TOKEN` = `your_bot_token_here`
 
-4. **Set Start Command**
-   - Go to "Settings" → "Deploy"
-   - Set start command: `python disco_bot/disc_bot.py`
-   - Set root directory: `disco_bot` (if deploying from repo root)
+4. **FFmpeg Installation**
+   - The project includes `nixpacks.toml` which automatically installs FFmpeg
+   - Railway will install FFmpeg during the build process
+   - No manual configuration needed
 
-5. **Deploy**
-   - Railway will automatically detect Python and install dependencies
+5. **Set Start Command** (if needed)
+   - Go to "Settings" → "Deploy"
+   - Start command should be: `python disc_bot.py`
+   - Root directory: `disco_bot` (if deploying from repo root)
+   - **Note**: `nixpacks.toml` already specifies this, so Railway should auto-detect it
+
+6. **Deploy**
+   - Railway will automatically detect Python, install FFmpeg, and install dependencies from `requirements.txt`
    - Check logs to see if bot connects successfully
+   - **Note**: Railway uses `requirements.txt` for dependencies (not Pipfile)
 
 **Note**: Railway may require a credit card but won't charge if you stay under the free tier limit.
 
@@ -72,6 +79,7 @@ This guide covers free hosting options for your Discord bot to run 24/7.
    - **Build Command**: `pip install -r disco_bot/requirements.txt`
    - **Start Command**: `python disco_bot/disc_bot.py`
    - **Root Directory**: `disco_bot` (if needed)
+   - **Note**: Render uses `requirements.txt` for dependencies (not Pipfile)
 
 4. **Add Environment Variable**
    - Scroll to "Environment Variables"
@@ -130,8 +138,10 @@ This guide covers free hosting options for your Discord bot to run 24/7.
 
 ### `Procfile` (for Heroku/Railway compatibility)
 ```
-worker: python disco_bot/disc_bot.py
+worker: python disc_bot.py
 ```
+
+**Note**: Hosting platforms typically use `requirements.txt` for dependencies. The `Pipfile` is for local development with pipenv.
 
 ### `runtime.txt` (optional, specify Python version)
 ```

@@ -2,6 +2,16 @@
 
 A Discord bot that plays YouTube videos in voice channels with advanced features including per-guild state management, rate limiting, and security improvements.
 
+## Quick Start: Choose Your Installation Method
+
+| Method | Use Case | Why Use It |
+|--------|----------|------------|
+| **pipenv** | Local development/testing | Isolated virtual environment, better dependency management, prevents conflicts |
+| **pip + requirements.txt** | Hosting (Railway, Render, etc.) | Standard format, works with all hosting platforms, simpler deployment |
+
+**Local Development:** Use `pipenv install` → See [Installation Methods](#installation-methods)  
+**Hosting Deployment:** Use `pip install -r requirements.txt` → See [HOSTING_GUIDE.md](HOSTING_GUIDE.md)
+
 ## Features
 
 - Play YouTube videos in Discord voice channels
@@ -22,7 +32,7 @@ A Discord bot that plays YouTube videos in voice channels with advanced features
 
 ## Prerequisites
 
-- Python 3.8 or higher
+- Python 3.11 or higher
 - FFmpeg installed on your system
 - A Discord bot token
 
@@ -43,22 +53,74 @@ sudo apt install ffmpeg
 brew install ffmpeg
 ```
 
+## Installation Methods
+
+This project supports two installation methods depending on your use case:
+
+### Option 1: pipenv (Recommended for Local Development)
+
+**Use this if:** You're developing or testing the bot locally on your computer.
+
+**Why pipenv?**
+- Creates an isolated virtual environment automatically
+- Manages dependencies more reliably
+- Prevents conflicts with other Python projects
+- Better for development workflow
+
+**Setup:**
+```bash
+# 1. Install pipenv (if not already installed)
+pip install pipenv
+
+# 2. Navigate to the project directory
+cd disco_bot
+
+# 3. Install dependencies (creates virtual environment automatically)
+pipenv install
+
+# 4. Activate the virtual environment
+pipenv shell
+```
+
+**Note:** The virtual environment will be created automatically in `.venv/` directory. You can also use `pipenv run python disc_bot.py` to run commands without activating the shell.
+
+### Option 2: pip + requirements.txt (For Hosting Platforms)
+
+**Use this if:** You're deploying to hosting platforms like Railway, Render, Fly.io, etc.
+
+**Why requirements.txt?**
+- Most hosting platforms don't support pipenv
+- Simpler deployment process
+- Standard Python dependency format
+- Works with all hosting providers
+
+**Setup:**
+```bash
+# Navigate to the project directory
+cd disco_bot
+
+# Install dependencies directly
+pip install -r requirements.txt
+```
+
+**Note:** For hosting platforms, they will automatically use `requirements.txt` during deployment. You don't need to run this manually.
+
 ## Setup
 
 1. **Clone or download this repository**
 
-2. **Install Python dependencies:**
-```bash
-pip install -r requirements.txt
-```
+2. **Choose your installation method:**
+   - **Local development:** Use pipenv (Option 1 above)
+   - **Hosting deployment:** Use pip/requirements.txt (Option 2 above)
+   - See [HOSTING_GUIDE.md](HOSTING_GUIDE.md) for deployment instructions
 
-3. **Get a Discord Bot Token:**
+4. **Get a Discord Bot Token:**
    - See [DISCORD_TOKEN_SETUP.md](DISCORD_TOKEN_SETUP.md) for detailed instructions
    - Quick version: Go to https://discord.com/developers/applications
    - Create a new application → Bot section → Add Bot → Copy token
    - **IMPORTANT**: Enable "Message Content Intent" and "Server Members Intent" in the Bot section
 
-4. **Set the Discord token as an environment variable:**
+5. **Set the Discord token as an environment variable:**
 
    **Windows (PowerShell):**
    ```powershell
@@ -93,12 +155,27 @@ pip install -r requirements.txt
 
 ## Running the Bot
 
-Navigate to the `disco_bot` directory and run:
+### Local Development (with pipenv)
 
+**If you installed with pipenv:**
 ```bash
-cd disco_bot
+# Option 1: Activate virtual environment first (recommended)
+pipenv shell
 python disc_bot.py
+
+# Option 2: Run without activating shell
+pipenv run python disc_bot.py
 ```
+
+### Hosting Platforms (with pip/requirements.txt)
+
+**If deploying to Railway, Render, etc.:**
+- The hosting platform will automatically install dependencies from `requirements.txt`
+- Set `DISCORD_TOKEN` as an environment variable in your hosting platform's dashboard
+- The platform will run `python disc_bot.py` automatically
+- See [HOSTING_GUIDE.md](HOSTING_GUIDE.md) for platform-specific instructions
+
+**Note:** Make sure you've set the `DISCORD_TOKEN` environment variable before running.
 
 You should see:
 ```
@@ -211,12 +288,60 @@ disco_bot/
 │   ├── song_extractor.py    # YouTube extraction
 │   ├── guild_state.py       # Per-guild state management
 │   └── music.py             # Main music cog
-├── requirements.txt          # Python dependencies
+├── Pipfile                   # pipenv dependencies (for local development)
+├── Pipfile.lock              # pipenv lock file (auto-generated, git-ignored)
+├── requirements.txt          # Python dependencies (for hosting platforms)
+├── nixpacks.toml             # Railway/Nixpacks config (installs FFmpeg)
+├── railway.json              # Railway deployment configuration
+├── Procfile                  # Process file for Heroku/Railway compatibility
 ├── README.md                 # This file
 └── DISCORD_TOKEN_SETUP.md    # Token setup guide
 ```
 
+**Note**: `Pipfile` is used for local development with pipenv. `requirements.txt` is kept for hosting platforms (Railway, Render, etc.) that don't support pipenv.
+
+## Local Development with pipenv
+
+**Note:** This section is for local development only. If you're deploying to a hosting platform, they will handle dependencies automatically using `requirements.txt`.
+
+### Common pipenv Commands
+
+```bash
+# Install dependencies
+pipenv install
+
+# Install a new package
+pipenv install package-name
+
+# Install a dev dependency
+pipenv install --dev package-name
+
+# Activate virtual environment
+pipenv shell
+
+# Run a command in the virtual environment
+pipenv run python disc_bot.py
+
+# Check installed packages
+pipenv graph
+
+# Update all packages
+pipenv update
+
+# Remove virtual environment
+pipenv --rm
+```
+
+### Virtual Environment Location
+
+The virtual environment is created in `.venv/` directory (automatically git-ignored). You can change this by setting `PIPENV_VENV_IN_PROJECT=false` in your environment.
+
 ## Troubleshooting
+
+### Virtual environment issues
+- If `pipenv install` fails, make sure Python 3.11+ is installed
+- Use `pipenv --python 3.11` to specify Python version
+- Delete `.venv/` and `Pipfile.lock` and run `pipenv install` again
 
 ### Bot doesn't join voice channel
 - Make sure you're in a voice channel
@@ -279,4 +404,5 @@ Before pushing to GitHub:
 
 ## License
 
-See LICENSE file for details.
+MIT license
+

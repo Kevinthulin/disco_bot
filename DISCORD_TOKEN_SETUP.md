@@ -82,11 +82,13 @@ python disc_bot.py
 7. Click **"OK"** on all windows
 8. Restart your terminal/IDE
 
-### Option 3: Using .env File (Alternative)
+### Option 3: Using .env File with pipenv (Recommended for Local Development)
 
-1. Install python-dotenv:
+If you're using pipenv (recommended), you can use a `.env` file:
+
+1. Install python-dotenv in your pipenv environment:
    ```bash
-   pip install python-dotenv
+   pipenv install python-dotenv
    ```
 
 2. Create a `.env` file in the `disco_bot` directory:
@@ -100,10 +102,9 @@ python disc_bot.py
    load_dotenv()
    ```
 
-4. Add `.env` to `.gitignore` to keep your token safe:
-   ```
-   .env
-   ```
+4. The `.env` file is already in `.gitignore` to keep your token safe
+
+**Note**: When using pipenv, the `.env` file will be automatically loaded when you run `pipenv shell` or `pipenv run`.
 
 ---
 
@@ -159,7 +160,7 @@ python disc_bot.py
 - [ ] Enabled Connect and Speak permissions
 - [ ] Invited bot to server
 - [ ] Set DISCORD_TOKEN environment variable
-- [ ] Installed dependencies (`pip install -r requirements.txt`)
+- [ ] Installed dependencies (`pipenv install` or `pip install -r requirements.txt`)
 - [ ] Installed FFmpeg
 - [ ] Ran the bot (`python disc_bot.py`)
 

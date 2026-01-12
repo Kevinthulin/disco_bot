@@ -40,6 +40,12 @@ The bot uses the following environment variables:
 
 Regularly update dependencies to receive security patches:
 
+**Using pipenv (recommended for local development):**
+```bash
+pipenv update
+```
+
+**Using pip:**
 ```bash
 pip install --upgrade -r requirements.txt
 ```
