@@ -1,0 +1,13 @@
+# Render deployment configuration
+# NOTE: sync: false means the DISCORD_TOKEN value is NOT synced from this file
+# You must set DISCORD_TOKEN in Render's dashboard environment variables
+services:
+  - type: web
+    name: discord-music-bot
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: python disc_bot.py
+    envVars:
+      - key: DISCORD_TOKEN
+        sync: false  # Safe to commit - no actual token value stored here
+
