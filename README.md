@@ -291,7 +291,8 @@ disco_bot/
 ├── Pipfile                   # pipenv dependencies (for local development)
 ├── Pipfile.lock              # pipenv lock file (auto-generated, git-ignored)
 ├── requirements.txt          # Python dependencies (for hosting platforms)
-├── nixpacks.toml             # Railway/Nixpacks config (installs FFmpeg)
+├── Dockerfile                # Docker configuration (installs FFmpeg for Railway)
+├── nixpacks.toml             # Railway/Nixpacks config (alternative to Dockerfile)
 ├── railway.json              # Railway deployment configuration
 ├── Procfile                  # Process file for Heroku/Railway compatibility
 ├── README.md                 # This file

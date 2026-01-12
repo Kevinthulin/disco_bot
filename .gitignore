@@ -114,3 +114,6 @@ htmlcov/
 *.tmp
 temp/
 tmp/
+
+# Docker (keep Dockerfile, ignore build artifacts)
+.dockerignore

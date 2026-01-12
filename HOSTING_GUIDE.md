@@ -41,8 +41,9 @@ This guide covers free hosting options for your Discord bot to run 24/7.
    - Add: `DISCORD_TOKEN` = `your_bot_token_here`
 
 4. **FFmpeg Installation**
-   - The project includes `nixpacks.toml` which automatically installs FFmpeg
-   - Railway will install FFmpeg during the build process
+   - The project includes both `Dockerfile` and `nixpacks.toml` for FFmpeg installation
+   - Railway will automatically detect and use the Dockerfile (which installs FFmpeg)
+   - FFmpeg will be installed during the build process
    - No manual configuration needed
 
 5. **Set Start Command** (if needed)
