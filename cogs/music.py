@@ -595,45 +595,18 @@ class Music(commands.Cog):
     )
     @music_channel_only()
     async def skip(self, ctx: commands.Context) -> None:
-        """Skip the current song. Uses voting if multiple users in channel."""
+        """Skip the current song immediately."""
         state = self._get_state(ctx)
         state.update_activity()
 
         if ctx.voice_client is None or not state.is_playing:
             await ctx.send("❌ Nothing is playing!")
             return
+        # Skip immediately (no voting required)
+        ctx.voice_client.stop()
+        state.skip_votes.clear()
+        await ctx.send("⏭️ Skipped")
 
-        # Calculate required votes
-        required_votes = calculate_required_votes(state.voice_client)
-        is_admin = ctx.author.guild_permissions.administrator
-
-        # Admin or single user: skip immediately
-        if required_votes == 1 or is_admin:
-            ctx.voice_client.stop()
-            state.skip_votes.clear()
-            await ctx.send("⏭️ Skipped")
-            return
-
-        # Voting system for multiple users
-        if ctx.author.id in state.skip_votes:
-            await ctx.send("❌ You already voted to skip!")
-            return
-
-        state.skip_votes.add(ctx.author.id)
-        current_votes = len(state.skip_votes)
-
-        if current_votes >= required_votes:
-            ctx.voice_client.stop()
-            state.skip_votes.clear()
-            await ctx.send(
-                f"⏭️ Skipped! ({current_votes}/{required_votes} votes)"
-            )
-        else:
-            needed = required_votes - current_votes
-            await ctx.send(
-                f"⏭️ Vote to skip: {current_votes}/{required_votes} votes "
-                f"({needed} more needed)"
-            )
 
     # ========================================================================
     # COMMANDS - QUEUE MANAGEMENT
