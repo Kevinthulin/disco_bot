@@ -82,6 +82,12 @@ class YTDLSource(discord.PCMVolumeTransformer):
                 f"Available keys: {list(data.keys())}"
             )
 
+        # #region agent log
+        import json
+        with open(r'c:\Users\Kevin\Desktop\Github\disco_bot\.cursor\debug.log', 'a', encoding='utf-8') as f:
+            f.write(json.dumps({'sessionId':'debug-session','runId':'initial','hypothesisId':'H1','location':'audio_source.py:86','message':'Stream metadata before FFmpeg','data':{'asr':data.get('asr'),'abr':data.get('abr'),'acodec':data.get('acodec'),'sample_rate':data.get('sample_rate'),'format_id':data.get('format_id'),'ext':data.get('ext')},'timestamp':__import__('time').time()*1000}) + '\n')
+        # #endregion
+
         logger.info(f"Using audio source URL: {filename[:80]}...")
 
         # Create FFmpeg audio source
@@ -93,6 +99,13 @@ class YTDLSource(discord.PCMVolumeTransformer):
                 '-reconnect 1 -reconnect_streamed 1 '
                 '-reconnect_delay_max 5'
             )
+            
+            # #region agent log
+            import json
+            with open(r'c:\Users\Kevin\Desktop\Github\disco_bot\.cursor\debug.log', 'a', encoding='utf-8') as f:
+                f.write(json.dumps({'sessionId':'debug-session','runId':'initial','hypothesisId':'H2','location':'audio_source.py:98','message':'FFmpeg options used','data':{'before_options':reconnect_opts,'has_after_options':False},'timestamp':__import__('time').time()*1000}) + '\n')
+            # #endregion
+            
             audio_source = discord.FFmpegPCMAudio(
                 filename,
                 before_options=reconnect_opts
@@ -102,6 +115,12 @@ class YTDLSource(discord.PCMVolumeTransformer):
             logger.warning(f"FFmpeg with reconnect failed: {e}")
             # Try with absolutely no options
             try:
+                # #region agent log
+                import json
+                with open(r'c:\Users\Kevin\Desktop\Github\disco_bot\.cursor\debug.log', 'a', encoding='utf-8') as f:
+                    f.write(json.dumps({'sessionId':'debug-session','runId':'initial','hypothesisId':'H2','location':'audio_source.py:105','message':'FFmpeg fallback - no options','data':{'reconnect_failed':str(e)},'timestamp':__import__('time').time()*1000}) + '\n')
+                # #endregion
+                
                 audio_source = discord.FFmpegPCMAudio(filename)
                 logger.debug("FFmpeg created with no options")
             except Exception as e2:
