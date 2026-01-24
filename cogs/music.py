@@ -177,11 +177,6 @@ class Music(commands.Cog):
                 )
 
             # Small delay to ensure buffer is ready (reduces stuttering)
-            # #region agent log
-            import json
-            with open(r'c:\Users\Kevin\Desktop\Github\disco_bot\.cursor\debug.log', 'a', encoding='utf-8') as f:
-                f.write(json.dumps({'sessionId':'debug-session','runId':'initial','hypothesisId':'H5','location':'music.py:180','message':'Before buffer delay','data':{'buffer_delay_seconds':BUFFER_DELAY_SECONDS,'queue_length':len(state.queue)},'timestamp':__import__('time').time()*1000}) + '\n')
-            # #endregion
             await asyncio.sleep(BUFFER_DELAY_SECONDS)
 
             def after_callback(error: Optional[Exception]) -> None:
@@ -199,7 +194,7 @@ class Music(commands.Cog):
                 # #region agent log
                 import json
                 with open(r'c:\Users\Kevin\Desktop\Github\disco_bot\.cursor\debug.log', 'a', encoding='utf-8') as f:
-                    f.write(json.dumps({'sessionId':'debug-session','runId':'initial','hypothesisId':'H5','location':'music.py:194','message':'Starting playback','data':{'is_playing':state.voice_client.is_playing(),'is_paused':state.voice_client.is_paused(),'latency':state.voice_client.latency,'average_latency':state.voice_client.average_latency},'timestamp':__import__('time').time()*1000}) + '\n')
+                    f.write(json.dumps({'sessionId':'debug-session','runId':'post-fix','hypothesisId':'H5','location':'music.py:194','message':'Playback start (WORKING)','data':{'latency_ms':state.voice_client.latency*1000,'avg_latency_ms':state.voice_client.average_latency*1000},'timestamp':__import__('time').time()*1000}) + '\n')
                 # #endregion
                 
                 state.voice_client.play(player, after=after_callback)
@@ -491,11 +486,6 @@ class Music(commands.Cog):
                     await ctx.send(f"🎵 **Now Playing:** {title}")
 
                     # Small delay to ensure buffer is ready
-                    # #region agent log
-                    import json
-                    with open(r'c:\Users\Kevin\Desktop\Github\disco_bot\.cursor\debug.log', 'a', encoding='utf-8') as f:
-                        f.write(json.dumps({'sessionId':'debug-session','runId':'initial','hypothesisId':'H5','location':'music.py:483','message':'Play command buffer delay','data':{'buffer_delay_seconds':BUFFER_DELAY_SECONDS,'song_title':song_info.get('title','')},'timestamp':__import__('time').time()*1000}) + '\n')
-                    # #endregion
                     await asyncio.sleep(BUFFER_DELAY_SECONDS)
 
                     def after_play_callback(
@@ -516,7 +506,7 @@ class Music(commands.Cog):
                             # #region agent log
                             import json
                             with open(r'c:\Users\Kevin\Desktop\Github\disco_bot\.cursor\debug.log', 'a', encoding='utf-8') as f:
-                                f.write(json.dumps({'sessionId':'debug-session','runId':'initial','hypothesisId':'H5','location':'music.py:500','message':'Play command starting playback','data':{'is_playing':voice_client.is_playing(),'is_paused':voice_client.is_paused(),'latency':voice_client.latency,'average_latency':voice_client.average_latency},'timestamp':__import__('time').time()*1000}) + '\n')
+                                f.write(json.dumps({'sessionId':'debug-session','runId':'post-fix','hypothesisId':'H3,H5','location':'music.py:500','message':'Play cmd start (WORKING)','data':{'already_playing':voice_client.is_playing(),'latency_ms':voice_client.latency*1000},'timestamp':__import__('time').time()*1000}) + '\n')
                             # #endregion
                             
                             voice_client.play(

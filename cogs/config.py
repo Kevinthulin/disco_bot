@@ -105,12 +105,6 @@ FFMPEG_BEFORE_OPTIONS = (
 # Simplified: removed audio filter that might cause issues
 FFMPEG_OPTIONS = '-vn -f s16le -ar 48000 -ac 2'
 
-# #region agent log
-import json
-with open(r'c:\Users\Kevin\Desktop\Github\disco_bot\.cursor\debug.log', 'a', encoding='utf-8') as _f:
-    _f.write(json.dumps({'sessionId':'debug-session','runId':'initial','hypothesisId':'H3,H4','location':'config.py:106','message':'FFmpeg config at module load','data':{'before_options':FFMPEG_BEFORE_OPTIONS,'options':FFMPEG_OPTIONS,'buffer_delay':0.2},'timestamp':__import__('time').time()*1000}) + '\n')
-# #endregion
-
 
 # ============================================================================
 # TIMING CONSTANTS
